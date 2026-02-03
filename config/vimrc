@@ -1,0 +1,651 @@
+" ============================================================================
+" Vim VSCode Enhanced Configuration
+" A modern Vim setup with VSCode-like features
+" ============================================================================
+
+" ============================================================================
+" General Settings
+" ============================================================================
+
+" Use Vim settings, rather than Vi settings
+set nocompatible
+
+" Enable file type detection and plugins
+filetype plugin indent on
+
+" Enable syntax highlighting
+syntax enable
+
+" Set encoding
+set encoding=utf-8
+set fileencoding=utf-8
+
+" Line numbers
+set number
+set relativenumber
+
+" Show command in bottom bar
+set showcmd
+
+" Highlight current line
+set cursorline
+
+" Visual autocomplete for command menu
+set wildmenu
+set wildmode=longest:full,full
+
+" Redraw only when needed
+set lazyredraw
+
+" Highlight matching parentheses
+set showmatch
+
+" Search settings
+set incsearch       " Search as characters are entered
+set hlsearch        " Highlight matches
+set ignorecase      " Ignore case when searching
+set smartcase       " Override ignorecase if search contains capitals
+
+" Tab settings
+set tabstop=4       " Number of visual spaces per TAB
+set softtabstop=4   " Number of spaces in tab when editing
+set shiftwidth=4    " Number of spaces for indentation
+set expandtab       " Tabs are spaces
+set smartindent     " Smart indentation
+set autoindent      " Auto indentation
+
+" Line wrapping
+set wrap
+set linebreak
+
+" Backspace behavior
+set backspace=indent,eol,start
+
+" Hide buffers instead of closing
+set hidden
+
+" Faster updates
+set updatetime=300
+
+" Always show sign column
+set signcolumn=yes
+
+" Better display for messages
+set cmdheight=2
+
+" Don't pass messages to completion menu
+set shortmess+=c
+
+" Show tab line always
+set showtabline=2
+
+" Enable mouse support
+set mouse=a
+
+" Clipboard settings
+set clipboard=unnamedplus
+
+" Persistent undo
+set undofile
+set undodir=~/.vim/undodir
+
+" Backup settings
+set nobackup
+set nowritebackup
+set noswapfile
+
+" Split windows
+set splitbelow
+set splitright
+
+" Auto read when file is changed externally
+set autoread
+
+" Show status line always
+set laststatus=2
+
+" ============================================================================
+" Plugin Management (vim-plug)
+" ============================================================================
+
+" Auto-install vim-plug if not present
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+" ===== Core Functionality =====
+" LSP and Auto-completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" File Explorer
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Fuzzy Finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Git Integration
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Status Line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Icons (must be loaded after nerdtree)
+Plug 'ryanoasis/vim-devicons'
+
+" ===== Editing Enhancements =====
+" Auto-pairs for brackets
+Plug 'jiangmiao/auto-pairs'
+
+" Multiple cursors
+Plug 'terryma/vim-multiple-cursors'
+
+" Easy commenting
+Plug 'tpope/vim-commentary'
+
+" Surround text objects
+Plug 'tpope/vim-surround'
+
+" Auto close tags (HTML/XML)
+Plug 'alvan/vim-closetag'
+
+" Snippet support
+Plug 'honza/vim-snippets'
+
+" ===== Language Support =====
+" Syntax highlighting for multiple languages
+Plug 'sheerun/vim-polyglot'
+
+" ===== Visual Enhancements =====
+" Color schemes
+Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'arcticicestudio/nord-vim'
+
+" Indent guides
+Plug 'Yggdroot/indentLine'
+
+" Smooth scrolling
+Plug 'psliwka/vim-smoothie'
+
+" Better syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" ===== Utilities =====
+" Start screen
+Plug 'mhinz/vim-startify'
+
+" Which key helper
+Plug 'liuchengxu/vim-which-key'
+
+" Terminal integration
+Plug 'voldikss/vim-floaterm'
+
+" Tags and code navigation
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
+
+call plug#end()
+
+" ============================================================================
+" Color Scheme
+" ============================================================================
+
+" Enable true colors
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+" Set background
+set background=dark
+
+" Choose color scheme (uncomment your preference)
+colorscheme gruvbox
+" colorscheme onedark
+" colorscheme dracula
+" colorscheme nord
+
+" ============================================================================
+" Plugin Configuration
+" ============================================================================
+
+" ----- NERDTree -----
+let NERDTreeShowHidden=1
+let NERDTreeMinimalUI=1
+let NERDTreeIgnore=['\.git$', '\.DS_Store$', '__pycache__', 'node_modules']
+let NERDTreeAutoDeleteBuffer=1
+
+" ----- FZF -----
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+
+" ----- Airline -----
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline_powerline_fonts = 1
+let g:airline_theme='gruvbox'
+
+" ----- GitGutter -----
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+
+" ----- IndentLine -----
+let g:indentLine_char = '│'
+let g:indentLine_first_char = '│'
+let g:indentLine_showFirstIndentLevel = 1
+
+" ----- Floaterm -----
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
+let g:floaterm_position = 'center'
+
+" ----- Gutentags (ctags/cscope) -----
+" Enable both ctags and cscope
+let g:gutentags_modules = ['ctags', 'cscope']
+
+" Store tags in cache directory
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+" Configure ctags
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" Project root markers
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" File types to exclude
+let g:gutentags_ctags_exclude = [
+    \ '*.git', '*.svg', '*.hg',
+    \ '*/tests/*',
+    \ 'build',
+    \ 'dist',
+    \ '*sites/*/files/*',
+    \ 'bin',
+    \ 'node_modules',
+    \ 'bower_components',
+    \ 'cache',
+    \ 'compiled',
+    \ 'docs',
+    \ 'example',
+    \ 'bundle',
+    \ 'vendor',
+    \ '*.md',
+    \ '*-lock.json',
+    \ '*.lock',
+    \ '*bundle*.js',
+    \ '*build*.js',
+    \ '.*rc*',
+    \ '*.json',
+    \ '*.min.*',
+    \ '*.map',
+    \ '*.bak',
+    \ '*.zip',
+    \ '*.pyc',
+    \ '*.class',
+    \ '*.sln',
+    \ '*.Master',
+    \ '*.csproj',
+    \ '*.tmp',
+    \ '*.csproj.user',
+    \ '*.cache',
+    \ '*.pdb',
+    \ 'tags*',
+    \ 'cscope.*',
+    \ '*.css',
+    \ '*.less',
+    \ '*.scss',
+    \ '*.exe', '*.dll',
+    \ '*.mp3', '*.ogg', '*.flac',
+    \ '*.swp', '*.swo',
+    \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+    \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+    \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+    \ ]
+
+" Generate tags in background
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+
+" Status line integration
+set statusline+=%{gutentags#statusline()}
+
+" Gutentags Plus settings (for cscope)
+let g:gutentags_plus_switch = 1
+let g:gutentags_plus_nomap = 1
+
+" ----- CoC Settings -----
+" Use tab for trigger completion
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" ============================================================================
+" Key Mappings
+" ============================================================================
+
+" Set leader key to Space
+let mapleader = " "
+let maplocalleader = " "
+
+" ----- General -----
+" Save file
+nnoremap <Leader>w :w<CR>
+
+" Quit
+nnoremap <Leader>q :q<CR>
+
+" Save and quit
+nnoremap <Leader>x :x<CR>
+
+" Clear search highlighting
+nnoremap <Leader>h :nohlsearch<CR>
+
+" ----- File Navigation -----
+" Toggle NERDTree
+nnoremap <Leader>e :NERDTreeToggle<CR>
+
+" Find current file in NERDTree
+nnoremap <Leader>ef :NERDTreeFind<CR>
+
+" Fuzzy find files
+nnoremap <Leader>ff :Files<CR>
+
+" Fuzzy find in files (grep)
+nnoremap <Leader>fg :Rg<CR>
+
+" Fuzzy find buffers
+nnoremap <Leader>bb :Buffers<CR>
+
+" Recent files
+nnoremap <Leader>fr :History<CR>
+
+" ----- Window Management -----
+" Split windows
+nnoremap <Leader>sv :vsplit<CR>
+nnoremap <Leader>sh :split<CR>
+
+" Navigate between windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Resize windows
+nnoremap <C-Up> :resize +2<CR>
+nnoremap <C-Down> :resize -2<CR>
+nnoremap <C-Left> :vertical resize -2<CR>
+nnoremap <C-Right> :vertical resize +2<CR>
+
+" ----- Buffer Management -----
+" Next/previous buffer
+nnoremap <Leader>bn :bnext<CR>
+nnoremap <Leader>bp :bprevious<CR>
+
+" Close buffer
+nnoremap <Leader>bd :bdelete<CR>
+
+" ----- Terminal -----
+" Toggle floating terminal
+nnoremap <C-n> :FloatermToggle<CR>
+tnoremap <C-n> <C-\><C-n>:FloatermToggle<CR>
+
+" ----- LSP (CoC) -----
+" Go to definition
+nmap <silent> gd <Plug>(coc-definition)
+
+" Go to type definition
+nmap <silent> gy <Plug>(coc-type-definition)
+
+" Go to implementation
+nmap <silent> gi <Plug>(coc-implementation)
+
+" Find references
+nmap <silent> gr <Plug>(coc-references)
+
+" Show documentation
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Rename symbol
+nmap <Leader>rn <Plug>(coc-rename)
+
+" Format code
+nmap <Leader>fm <Plug>(coc-format)
+
+" Code action
+nmap <Leader>ca <Plug>(coc-codeaction)
+
+" Fix current line
+nmap <Leader>qf <Plug>(coc-fix-current)
+
+" ----- Git -----
+" Git status
+nnoremap <Leader>gs :Git<CR>
+
+" Git diff
+nnoremap <Leader>gd :Gdiffsplit<CR>
+
+" Git commit
+nnoremap <Leader>gc :Git commit<CR>
+
+" Git push
+nnoremap <Leader>gp :Git push<CR>
+
+" Git pull
+nnoremap <Leader>gl :Git pull<CR>
+
+" Git blame
+nnoremap <Leader>gb :Git blame<CR>
+
+" ----- Commenting -----
+" Toggle comment (from vim-commentary)
+" Use: gcc for line, gc in visual mode
+
+" ----- Multiple Cursors -----
+" Default mappings:
+" Ctrl-n: select word under cursor
+" Ctrl-n: select next occurrence
+" Ctrl-p: go back to previous occurrence
+" Ctrl-x: skip current occurrence
+
+" ----- Ctags -----
+" Jump to tag under cursor
+nnoremap <Leader>] <C-]>
+
+" Jump back from tag
+nnoremap <Leader>[ <C-t>
+
+" Show tag list
+nnoremap <Leader>ts :tags<CR>
+
+" ----- Cscope -----
+" Find symbol
+nnoremap <Leader>cs :GscopeFind s <C-R>=expand("<cword>")<CR><CR>
+
+" Find definition
+nnoremap <Leader>cg :GscopeFind g <C-R>=expand("<cword>")<CR><CR>
+
+" Find functions calling this function
+nnoremap <Leader>cc :GscopeFind c <C-R>=expand("<cword>")<CR><CR>
+
+" Find functions called by this function
+nnoremap <Leader>cd :GscopeFind d <C-R>=expand("<cword>")<CR><CR>
+
+" Find text string
+nnoremap <Leader>ct :GscopeFind t <C-R>=expand("<cword>")<CR><CR>
+
+" Find egrep pattern
+nnoremap <Leader>ce :GscopeFind e <C-R>=expand("<cword>")<CR><CR>
+
+" Find file
+nnoremap <Leader>cf :GscopeFind f <C-R>=expand("<cfile>")<CR><CR>
+
+" Find files including this file
+nnoremap <Leader>ci :GscopeFind i <C-R>=expand("<cfile>")<CR><CR>
+
+" Find assignments to this symbol
+nnoremap <Leader>ca :GscopeFind a <C-R>=expand("<cword>")<CR><CR>
+
+" ============================================================================
+" Auto Commands
+" ============================================================================
+
+" Auto-close NERDTree if it's the only window left
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Highlight yanked text
+augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=300}
+augroup END
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+
+" Auto-save on focus lost
+autocmd FocusLost * silent! wa
+
+" Format on save (for supported file types)
+autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.py,*.go,*.rs call CocAction('format')
+
+" Auto-update tags on file save
+autocmd BufWritePost * if exists(':GutentagsUpdate') | GutentagsUpdate | endif
+
+" ============================================================================
+" CoC Extensions
+" ============================================================================
+" Install these extensions with :CocInstall
+" 
+" Recommended extensions:
+" :CocInstall coc-json coc-tsserver coc-html coc-css coc-python
+" :CocInstall coc-snippets coc-pairs coc-prettier coc-eslint
+
+" ============================================================================
+" Custom Functions
+" ============================================================================
+
+" Toggle between relative and absolute line numbers
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber
+  else
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <Leader>tn :call NumberToggle()<CR>
+
+" Regenerate tags manually
+function! RegenerateTags()
+  if exists(':GutentagsUpdate')
+    GutentagsUpdate!
+    echo "Regenerating tags..."
+  else
+    echo "Gutentags not available"
+  endif
+endfunc
+
+nnoremap <Leader>rt :call RegenerateTags()<CR>
+
+" Show tag info
+function! ShowTagInfo()
+  let l:tag = expand('<cword>')
+  let l:tags = taglist('^'.l:tag.'$')
+  if len(l:tags) > 0
+    echo 'Tags for "' . l:tag . '":'
+    for tag in l:tags
+      echo '  ' . tag.filename . ':' . tag.cmd
+    endfor
+  else
+    echo 'No tags found for "' . l:tag . '"'
+  endif
+endfunc
+
+nnoremap <Leader>ti :call ShowTagInfo()<CR>
+
+" ============================================================================
+" Status Line (if airline is not loaded)
+" ============================================================================
+
+if !exists('g:loaded_airline')
+  set statusline=%f\ %m\ %r%=%l/%L\ %c\ %p%%
+endif
+
+" ============================================================================
+" Performance Tweaks
+" ============================================================================
+
+" Limit syntax highlighting for long lines
+set synmaxcol=200
+
+" Faster scrolling
+set ttyfast
+
+" ============================================================================
+" Final Notes
+" ============================================================================
+" 
+" Installation:
+" 1. Install vim-plug: Run the auto-install command above or manually
+" 2. Open Vim and run :PlugInstall
+" 3. Install CoC extensions: :CocInstall coc-json coc-tsserver ...
+" 4. Install a Nerd Font for icons: https://www.nerdfonts.com/
+" 5. Restart Vim and enjoy!
+"
+" Key bindings quick reference:
+" <Space>e  - Toggle file explorer
+" <Space>ff - Find files
+" <Space>fg - Find in files
+" <Ctrl-n>  - Toggle terminal
+" gd        - Go to definition
+" K         - Show documentation
+" <Space>rn - Rename symbol
+"
+" Ctags/Cscope:
+" <Space>]  - Jump to tag
+" <Space>[  - Jump back
+" <Space>ts - Show tag stack
+" <Space>rt - Regenerate tags
+" <Space>ti - Show tag info
+" <Space>cs - Find symbol
+" <Space>cg - Find definition
+" <Space>cc - Find callers
+" <Space>cd - Find callees
+" <Space>cf - Find file
+" <Space>ci - Find includers

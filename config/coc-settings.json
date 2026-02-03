@@ -1,0 +1,73 @@
+{
+  "suggest.enablePreview": true,
+  "suggest.enablePreselect": true,
+  "suggest.floatEnable": true,
+  "suggest.noselect": false,
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+  
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.infoSign": "ℹ",
+  "diagnostic.hintSign": "➤",
+  
+  "codeLens.enable": true,
+  
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "json",
+    "python",
+    "go",
+    "rust",
+    "html",
+    "css",
+    "scss"
+  ],
+  
+  "languageserver": {
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+  },
+  
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.formatting.provider": "black",
+  
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true,
+  
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.tabWidth": 2,
+  
+  "snippets.ultisnips.enable": true,
+  "snippets.ultisnips.directories": ["UltiSnips", "~/.vim/UltiSnips"],
+  
+  "git.enableGutters": true,
+  "git.addGBlameToVirtualText": true,
+  
+  "explorer.icon.enableNerdfont": true,
+  
+  "list.insertMappings": {
+    "<C-j>": "do:next",
+    "<C-k>": "do:previous"
+  },
+  
+  "list.normalMappings": {
+    "<C-j>": "do:next",
+    "<C-k>": "do:previous"
+  }
+}
