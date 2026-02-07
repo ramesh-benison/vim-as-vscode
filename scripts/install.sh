@@ -53,7 +53,7 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 # Install vim-plug
 echo -e "${GREEN}Installing vim-plug plugin manager...${NC}"
 cp "$PROJECT_DIR/config/vimrc" ~/.vimrc
-cp  "$PROJECT_DIR/scripts/plug.vim"" ~/.vim/autoload/plug.vim
+cp  "$PROJECT_DIR/scripts/plug.vim" ~/.vim/autoload/plug.vim
 
 # Copy vimrc
 echo -e "${GREEN}Installing vimrc configuration...${NC}"
@@ -71,7 +71,7 @@ vim +PlugInstall +qall
 # Check for Node.js (required for CoC)
 if ! command -v node &> /dev/null; then
     echo -e "${YELLOW}Warning: Node.js is not installed.${NC}"
-    echo "Node.js is required for Language Server features (CoC.nvim)."
+    echo "Node.js is required for Language Server features [CoC.nvim]."
     echo "Please install Node.js 14+ from: https://nodejs.org/"
     echo ""
 else
@@ -129,7 +129,7 @@ fi
 
 # Check for cscope (optional)
 if ! command -v cscope &> /dev/null; then
-    echo -e "${YELLOW}Notice: cscope is not installed (optional).${NC}"
+    echo -e "${YELLOW}Notice: cscope is not installed [optional].${NC}"
     echo "Cscope provides advanced navigation for C/C++ projects."
     echo "To install:"
     echo "  Ubuntu/Debian: sudo apt install cscope"
@@ -154,9 +154,9 @@ echo "Next steps:"
 echo "1. Install a Nerd Font for icons: https://www.nerdfonts.com/"
 echo "2. Configure your terminal to use the Nerd Font"
 echo "3. Open Vim and the plugins will be installed automatically"
-echo "4. Install language servers (run: ./scripts/install-language-servers.sh)"
+echo "4. Install language servers [run: ./scripts/install-language-servers.sh]"
 echo ""
-echo "Optional CoC extensions to install (in Vim):"
+echo "Optional CoC extensions to install [in Vim]:"
 echo "  :CocInstall coc-json coc-tsserver coc-html coc-css"
 echo "  :CocInstall coc-python coc-prettier coc-eslint"
 echo "  :CocInstall coc-snippets coc-pairs"

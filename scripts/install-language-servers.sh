@@ -18,8 +18,21 @@ echo ""
 # Check for Node.js
 if ! command -v node &> /dev/null; then
     echo -e "${RED}Error: Node.js is required but not installed.${NC}"
-    echo "Please install Node.js 14+ from: https://nodejs.org/"
-    exit 1
+    echo "Installing Node.js 14+ from: https://nodejs.org/"
+    # Download and install nvm:
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+    # in lieu of restarting the shell
+    \. "$HOME/.nvm/nvm.sh"
+
+    # Download and install Node.js:
+    nvm install 24
+
+    # Verify the Node.js version:
+    node -v # Should print "v24.13.0".
+
+    # Verify npm version:
+    npm -v # Should print "11.6.2".
 fi
 
 echo -e "${GREEN}Node.js found: $(node --version)${NC}"
@@ -38,6 +51,8 @@ install_npm_package() {
     fi
     echo ""
 }
+# Clang support
+install_npm_package "clang-format" "clang-format support"
 
 # JavaScript/TypeScript
 install_npm_package "typescript" "TypeScript"
@@ -111,6 +126,7 @@ echo -e "${GREEN}Language Server Installation Complete${NC}"
 echo -e "${GREEN}======================================${NC}"
 echo ""
 echo "Installed language servers for:"
+echo "  ✓ Clang"
 echo "  ✓ JavaScript/TypeScript"
 echo "  ✓ HTML/CSS/JSON"
 echo "  ✓ Bash"
